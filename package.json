@@ -1,5 +1,5 @@
 {
-  "name": "Investing",
+  "name": "investing",
   "version": "1.0.0",
   "description": "Home assignment",
   "main": "index.js",
@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/yotamm/Investing.com#readme",
   "dependencies": {
-    "http-server": "^0.12.1",
+    "bootstrap": "^4.4.1",
     "mysql": "^2.18.1"
   }
 }
