@@ -12,13 +12,13 @@ import {IPortfolioEntry} from "./Interfaces/IPortfolioEntry";
 function App() {
 	let [userPortfolio, setUserPortfolio] = React.useState<IDeletablePortfolioEntry[]>([]);
 	let [instrumentList, setInstrumentList] = React.useState<IInstrument[]>([]);
-	const updatePortfolio = (response: IPortfolioEntry[]) => {
+	const updatePortfolio = React.useRef((response: IPortfolioEntry[]) => {
 		let entries: IDeletablePortfolioEntry[] = [];
 		for (let entry of response) {
 			const onDeleteHandler = () => {
 				deleteFromPortfolio(entry.instrumentId).then(response => {
 					if (response.status === 200) {
-						return getUserPortfolio().then(updatePortfolio);
+						return getUserPortfolio().then(updatePortfolio.current);
 					}
 				});
 			};
@@ -26,10 +26,10 @@ function App() {
 			entries.push(withDelete);
 		}
 		setUserPortfolio(entries);
-	};
+	});
 
 	React.useEffect(() => {
-		getUserPortfolio().then(updatePortfolio);
+		getUserPortfolio().then(updatePortfolio.current);
 		getInstrumentList().then((response) => setInstrumentList(response));
 	}, []);
 	return (
@@ -43,7 +43,7 @@ function App() {
 			</section>
 			<section className="add-to-portfolio" id="add-to-portfolio">
 				<h2 className="heading-color">Add To Your Portfolio</h2>
-				<AddInstrument instruments={instrumentList} onAddToPortfolio={() => getUserPortfolio().then(updatePortfolio)}/>
+				<AddInstrument instruments={instrumentList} onAddToPortfolio={() => getUserPortfolio().then(updatePortfolio.current)}/>
 			</section>
 		</div>
 	);
