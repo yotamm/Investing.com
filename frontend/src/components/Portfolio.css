@@ -3,3 +3,8 @@
     align-items: center;
     justify-content: space-between;
 }
+
+.list-group {
+    overflow: auto;
+    height: 40vh;
+}

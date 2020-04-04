@@ -21,9 +21,8 @@ function App() {
 			<section className="user-portfolio" id="user-portfolio">
 				<h2 className="heading-color">Your Portfolio</h2>
 				<div className="portfolio-wrapper">
-
+					<Portfolio entries={userPortfolio}/>
 				</div>
-				<Portfolio entries={userPortfolio}/>
 			</section>
 			<section className="add-to-portfolio" id="add-to-portfolio">
 				<h2 className="heading-color">Add To Your Portfolio</h2>
