@@ -3,12 +3,12 @@ import {IInstrument} from "../Interfaces/IInstrument";
 //TODO add data
 //TODO display options properly
 //TODO controlled components
-const AddInstrument: React.FC<{instruments: IInstrument[]}> = (props) => {
+const AddInstrument: React.FC<{instruments: IInstrument[]}> = ({instruments}) => {
 	return (
 		<div>
 			<select className="custom-select custom-select-lg mb-3">
 				<option defaultValue="true">Choose instrument</option>
-				{props.instruments.map(value => (<option key={value.instrumentId} value={value.instrumentId}>{value.name}</option> ))}
+				{instruments.map(value => (<option key={value.instrumentId} value={value.instrumentId}>{value.name}</option> ))}
 			</select>
 			<input type="number" className="form-control" placeholder="Holdings amount" aria-label="Holdings amount"
 						 aria-describedby="basic-addon2"/>

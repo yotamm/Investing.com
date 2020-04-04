@@ -1,12 +1,12 @@
 import React from "react";
 import './Portfolio.css';
-import {IPortfolioEntry} from "../Interfaces/IPortfolioEntry";
+import {IDeletablePortfolioEntry} from "../Interfaces/IDeletablePortfolioEntry";
 //TODO display data properly
 //TODO attach delete functionality
-const Portfolio: React.FC<{ entries: IPortfolioEntry[] }> = (props) => {
+const Portfolio: React.FC<{ entries: IDeletablePortfolioEntry[] }> = ({entries}) => {
 	return (
 		<ul className="list-group">
-			{props.entries.map((value, index) => {
+			{entries.map((value, index) => {
 				return (
 					<li className="list-group-item portfolio-entry-item" key={index}>
 						<span>{value.name}</span>
