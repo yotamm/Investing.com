@@ -10,29 +10,26 @@ function generalResponseHandler(response: Response) {
 }
 
 const jsonHeader = {"Content-Type": "application/json"};
+const baseURL = 'http://localhost:8080/';
 
 async function addToPortfolio(instrumentId: number, holdings: number): Promise<Response> {
-	//TODO url
-	return await fetch('url', {
+	return await fetch(`${baseURL}/portfolio`, {
 		method: 'POST', headers: jsonHeader,
 		body: JSON.stringify({instrumentId: instrumentId, holdings: holdings})
 	}).then(generalResponseHandler);
 }
 
 async function deleteFromPortfolio(instrumentId: number): Promise<Response> {
-	//TODO url
-	return await fetch('url', {method: 'DELETE'});
+	return await fetch(`${baseURL}/portfolio/${instrumentId}`, {method: 'DELETE'});
 }
 
 async function getUserPortfolio(): Promise<IPortfolioEntry[]> {
-	//TODO url
-	return await fetch('url', {method: 'GET', headers: jsonHeader})
+	return await fetch(`${baseURL}/portfolio`, {method: 'GET', headers: jsonHeader})
 		.then(generalResponseHandler);
 }
 
 async function getInstrumentList(): Promise<IInstrument[]> {
-	//TODO url
-	return await fetch('url', {method: 'GET', headers: jsonHeader})
+	return await fetch(`${baseURL}/instruments`, {method: 'GET', headers: jsonHeader})
 		.then(generalResponseHandler);
 }
 
