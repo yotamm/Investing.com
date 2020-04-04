@@ -1,6 +1,6 @@
 import React from "react";
 import './Portfolio.css';
-import {IPortfolioEntry} from "../IPortfolioEntry";
+import {IPortfolioEntry} from "../Interfaces/IPortfolioEntry";
 //TODO display data properly
 //TODO attach delete functionality
 const Portfolio: React.FC<{ entries: IPortfolioEntry[] }> = (props) => {

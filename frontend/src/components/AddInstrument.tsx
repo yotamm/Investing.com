@@ -1,5 +1,5 @@
 import React from 'react';
-import {IInstrument} from "./IInstrument";
+import {IInstrument} from "../Interfaces/IInstrument";
 //TODO add data
 //TODO display options properly
 //TODO controlled components

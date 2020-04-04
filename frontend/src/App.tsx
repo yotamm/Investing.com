@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import {Portfolio} from "./components/Portfolio";
-import {IPortfolioEntry} from "./IPortfolioEntry";
+import {IPortfolioEntry} from "./Interfaces/IPortfolioEntry";
 import mockData from './mockInstruments';
 import {AddInstrument} from "./components/AddInstrument";
 //TODO use real data
