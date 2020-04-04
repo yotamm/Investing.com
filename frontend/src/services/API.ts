@@ -1,3 +1,6 @@
+import {IPortfolioEntry} from "../Interfaces/IPortfolioEntry";
+import {IInstrument} from "../Interfaces/IInstrument";
+
 function generalResponseHandler(response: Response) {
 	if (response.status !== 200) {
 		console.error('Adding to portfolio failed: ', response);
@@ -8,7 +11,7 @@ function generalResponseHandler(response: Response) {
 
 const jsonHeader = {"Content-Type": "application/json"};
 
-async function addToPortfolio(instrumentId: number, holdings: number) {
+async function addToPortfolio(instrumentId: number, holdings: number): Promise<Response> {
 	//TODO url
 	return await fetch('url', {
 		method: 'POST', headers: jsonHeader,
@@ -16,18 +19,18 @@ async function addToPortfolio(instrumentId: number, holdings: number) {
 	}).then(generalResponseHandler);
 }
 
-async function deleteFromPortfolio(instrumentId: number) {
+async function deleteFromPortfolio(instrumentId: number): Promise<Response> {
 	//TODO url
-	return await fetch('url', {method: 'DELETE'}).then(generalResponseHandler);
+	return await fetch('url', {method: 'DELETE'});
 }
 
-async function getUserPortfolio() {
+async function getUserPortfolio(): Promise<IPortfolioEntry[]> {
 	//TODO url
 	return await fetch('url', {method: 'GET', headers: jsonHeader})
 		.then(generalResponseHandler);
 }
 
-async function getInstrumentList() {
+async function getInstrumentList(): Promise<IInstrument[]> {
 	//TODO url
 	return await fetch('url', {method: 'GET', headers: jsonHeader})
 		.then(generalResponseHandler);

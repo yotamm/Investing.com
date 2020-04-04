@@ -1,20 +1,37 @@
 import React from 'react';
 import './App.css';
 import {Portfolio} from "./components/Portfolio";
-import mockData from './mockInstruments';
 import {AddInstrument} from "./components/AddInstrument";
 import {IDeletablePortfolioEntry} from "./Interfaces/IDeletablePortfolioEntry";
 import {IInstrument} from "./Interfaces/IInstrument";
-//TODO use real data
-//TODO delete functions
+import {deleteFromPortfolio, getInstrumentList, getUserPortfolio} from "./services/API";
+import {IPortfolioEntry} from "./Interfaces/IPortfolioEntry";
+
 //TODO add functionality
+
 function App() {
-	let userPortfolio: IDeletablePortfolioEntry[] = mockData.map((value: Partial<IDeletablePortfolioEntry>) => {
-		value.onDelete = () => {console.log(value.instrumentId);};
-		value.holdings = 0;
-		return value;
-	}).slice(10) as IDeletablePortfolioEntry[];
-	let instruments: IInstrument[] = [...mockData];
+	let [userPortfolio, setUserPortfolio] = React.useState<IDeletablePortfolioEntry[]>([]);
+	let [instrumentList, setInstrumentList] = React.useState<IInstrument[]>([]);
+	const updatePortfolio = (response: IPortfolioEntry[]) => {
+		let entries: IDeletablePortfolioEntry[] = [];
+		for (let entry of response) {
+			const onDeleteHandler = () => {
+				deleteFromPortfolio(entry.instrumentId).then(response => {
+					if (response.status === 200) {
+						return getUserPortfolio().then(updatePortfolio);
+					}
+				});
+			};
+			const withDelete: IDeletablePortfolioEntry = {...entry, onDelete: onDeleteHandler};
+			entries.push(withDelete);
+		}
+		setUserPortfolio(entries);
+	};
+
+	React.useEffect(() => {
+		getUserPortfolio().then(updatePortfolio);
+		getInstrumentList().then((response) => setInstrumentList(response));
+	}, []);
 	return (
 		<div className="app-wrapper">
 			<h1 className="heading-color">Portfolio Manager</h1>
@@ -26,7 +43,7 @@ function App() {
 			</section>
 			<section className="add-to-portfolio" id="add-to-portfolio">
 				<h2 className="heading-color">Add To Your Portfolio</h2>
-				<AddInstrument instruments={instruments}/>
+				<AddInstrument instruments={instrumentList}/>
 			</section>
 		</div>
 	);
