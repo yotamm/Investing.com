@@ -38,10 +38,10 @@ const pool = mysql.createPool({
 });
 
 exports.asyncQuery = (...args) =>
-    new Promise((res, rej) =>
+    new Promise((resolve, reject) =>
         pool.query(...args, (err, result) => {
-            if (err) rej(err);
-            else res(result);
+            if (err) reject(err);
+            else resolve(result);
         })
     );
 
