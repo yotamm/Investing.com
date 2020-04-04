@@ -1,11 +1,11 @@
-// const mysql = require('mysql');
-// const connection = mysql.createConnection({
-//     host: 'localhost',
-//     user: 'root',
-//     password: 'abcd1234',
-//     database: 'investing'
-// });
-// connection.connect((err) => {
-//     if (err) throw err;
-//     console.log('Connected!');
-// });
+var express = require('express');
+
+var indexRouter = require('./routes/index');
+
+var app = express();
+
+app.use(express.json());
+
+app.use('/', indexRouter);
+
+module.exports = app;
