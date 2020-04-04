@@ -4,24 +4,34 @@ import {addToPortfolio} from "../services/API";
 
 
 const AddInstrument: React.FC<{instruments: IInstrument[], onAddToPortfolio: () => void}> = ({instruments, onAddToPortfolio}) => {
-	let [instrumentId, setInstrumentId] = React.useState<number>(0);
+	let [selectedInstrumentId, setSelectedInstrumentId] = React.useState<number>(0);
 	let [holdings, setHoldings] = React.useState<number>(0);
+	let [searchTerm, setSearchTerm] = React.useState<string>('');
+	const filteredInstruments = instruments.filter(instrument => instrument.name.includes(searchTerm));
+
 	const addInstrument = () => {
-		addToPortfolio(instrumentId, holdings).then(response => {
-			if(response.status === 200) {
-				onAddToPortfolio();
-			}
-		})
+		if(instruments.findIndex(instrument => instrument.instrumentId === selectedInstrumentId) !== -1 && holdings > 0) {
+			addToPortfolio(selectedInstrumentId, holdings).then(response => {
+				if(response.status === 200) {
+					onAddToPortfolio();
+				}
+			})
+		} else {
+			alert('Please choose an instrument and holdings amount');
+		}
+
 	};
-	const changeChosenInstrument = (e: ChangeEvent<HTMLSelectElement>) => setInstrumentId(parseInt(e.target.value));
+	const updateSearchTerm = (e: ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value);
+	const changeSelectedInstrument = (e: ChangeEvent<HTMLSelectElement>) => setSelectedInstrumentId(parseInt(e.target.value));
 	const changeHoldings = (e: ChangeEvent<HTMLInputElement>) => setHoldings(parseInt(e.target.value));
 	return (
 		<div>
-			<select className="custom-select custom-select-lg mb-3" value={instrumentId} onChange={changeChosenInstrument}>
-				<option defaultValue="true">Choose instrument</option>
-				{instruments.map(value => (<option key={value.instrumentId} value={value.instrumentId}>{value.name}</option> ))}
+			<input type="text" style={{marginBottom: '10px'}} className="form-control" placeholder="Search Instruments..." value={searchTerm} onChange={updateSearchTerm}/>
+			<select className="custom-select custom-select-lg mb-3" size={4} value={selectedInstrumentId} onChange={changeSelectedInstrument}>
+				<option defaultValue="0">Choose instrument</option>
+				{filteredInstruments.map(value => (<option key={value.instrumentId} value={value.instrumentId}>{value.name}</option> ))}
 			</select>
-			<input type="number" className="form-control" placeholder="Holdings amount" onChange={changeHoldings}/>
+			<input type="number" style={{marginTop: '15px'}} className="form-control" placeholder="Holdings amount" onChange={changeHoldings}/>
 			<button type="button" className="btn btn-primary" onClick={addInstrument}>Add</button>
 		</div>
 	);

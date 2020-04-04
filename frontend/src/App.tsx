@@ -7,7 +7,6 @@ import {IInstrument} from "./Interfaces/IInstrument";
 import {deleteFromPortfolio, getInstrumentList, getUserPortfolio} from "./services/API";
 import {IPortfolioEntry} from "./Interfaces/IPortfolioEntry";
 
-//TODO add functionality
 
 function App() {
 	let [userPortfolio, setUserPortfolio] = React.useState<IDeletablePortfolioEntry[]>([]);
