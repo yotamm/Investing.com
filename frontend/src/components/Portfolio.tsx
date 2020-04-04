@@ -1,8 +1,8 @@
 import React from "react";
 import './Portfolio.css';
 import {IDeletablePortfolioEntry} from "../Interfaces/IDeletablePortfolioEntry";
-//TODO display data properly
-//TODO attach delete functionality
+
+
 const Portfolio: React.FC<{ entries: IDeletablePortfolioEntry[] }> = ({entries}) => {
 	return (
 		<ul className="list-group">
