@@ -43,7 +43,7 @@ function App() {
 			</section>
 			<section className="add-to-portfolio" id="add-to-portfolio">
 				<h2 className="heading-color">Add To Your Portfolio</h2>
-				<AddInstrument instruments={instrumentList}/>
+				<AddInstrument instruments={instrumentList} onAddToPortfolio={() => getUserPortfolio().then(updatePortfolio)}/>
 			</section>
 		</div>
 	);
