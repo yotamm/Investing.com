@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "start:client": "cd frontend && npm start"
+    "start:client": "cd frontend && npm start",
+    "init:db": "node scripts/db-setup"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
