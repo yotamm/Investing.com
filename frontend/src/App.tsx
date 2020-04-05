@@ -10,10 +10,12 @@ import {IPortfolioEntry} from "./Interfaces/IPortfolioEntry";
 function App() {
   const [userPortfolio, setUserPortfolio] = React.useState<IPortfolioEntry[]>([]);
   const [instrumentList, setInstrumentList] = React.useState<IInstrument[]>([]);
+
+  const updatePortfolio = () => getUserPortfolio().then((response: IPortfolioEntry[]) => setUserPortfolio(response));
   const onDeleteHandler = (instrumentId: number) => {
     deleteFromPortfolio(instrumentId).then(response => {
       if (response.status === 200) {
-        return getUserPortfolio().then((response: IPortfolioEntry[]) => setUserPortfolio(response));
+        return updatePortfolio();
       }
     });
   };
@@ -24,14 +26,15 @@ function App() {
     }
     addToPortfolio(instrumentId, holdings).then(response => {
       console.log('Added instrument to portfolio');
-      return getUserPortfolio().then((response: IPortfolioEntry[]) => setUserPortfolio(response));
+      return updatePortfolio();
     });
   };
 
   React.useEffect(() => {
-    getUserPortfolio().then((response: IPortfolioEntry[]) => setUserPortfolio(response));
+    updatePortfolio().then();
     getInstrumentList().then((response) => setInstrumentList(response));
   }, []);
+
   return (
     <div className="app-wrapper">
       <h1 className="heading-color">Portfolio Manager</h1>
