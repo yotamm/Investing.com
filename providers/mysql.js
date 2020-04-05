@@ -21,7 +21,7 @@ setupConnection.connect(function (err) {
     setupConnection.query(createInstrumentTableQuery, function (err, result) {
         genericQueryCallback(err, "Instrument Table created");
     });
-    const createPortfolioTableQuery = "CREATE TABLE investing.portfolio (instrumentId INT NOT NULL PRIMARY KEY,holdings INT NOT NULL)";
+    const createPortfolioTableQuery = "CREATE TABLE investing.portfolio (instrumentId INT NOT NULL PRIMARY KEY, holdings INT NOT NULL, FOREIGN KEY (instrumentId) REFERENCES instrument(instrumentId))";
     setupConnection.query(createPortfolioTableQuery, function (err, result) {
         genericQueryCallback(err, "Portfolio Table created");
     });
