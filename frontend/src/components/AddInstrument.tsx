@@ -3,9 +3,9 @@ import {IInstrument} from "../Interfaces/IInstrument";
 
 
 const AddInstrument: React.FC<{instruments: IInstrument[], onAddToPortfolio: (instrumentId: number, holdings: number) => void}> = ({instruments, onAddToPortfolio}) => {
-  let [selectedInstrumentId, setSelectedInstrumentId] = React.useState<number>(0);
-  let [holdings, setHoldings] = React.useState<number>(0);
-  let [searchTerm, setSearchTerm] = React.useState<string>('');
+  const [selectedInstrumentId, setSelectedInstrumentId] = React.useState<number>(0);
+  const [holdings, setHoldings] = React.useState<number>(0);
+  const [searchTerm, setSearchTerm] = React.useState<string>('');
   const filteredInstruments = instruments.filter(instrument => instrument.name.toLowerCase().includes(searchTerm.toLowerCase()));
 
   const updateSearchTerm = (e: ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value);

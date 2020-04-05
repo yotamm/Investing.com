@@ -9,8 +9,8 @@ import {IPortfolioEntry} from "./Interfaces/IPortfolioEntry";
 
 
 function App() {
-  let [userPortfolio, setUserPortfolio] = React.useState<IDeletablePortfolioEntry[]>([]);
-  let [instrumentList, setInstrumentList] = React.useState<IInstrument[]>([]);
+  const [userPortfolio, setUserPortfolio] = React.useState<IDeletablePortfolioEntry[]>([]);
+  const [instrumentList, setInstrumentList] = React.useState<IInstrument[]>([]);
   const updatePortfolio = React.useRef((response: IPortfolioEntry[]) => {
     let entries: IDeletablePortfolioEntry[] = [];
     for (let entry of response) {
