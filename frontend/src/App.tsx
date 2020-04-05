@@ -27,14 +27,14 @@ function App() {
     setUserPortfolio(entries);
   });
   const addInstrument = (instrumentId: number, holdings: number) => {
-    if (instrumentId > 0 && holdings > 0) {
-      addToPortfolio(instrumentId, holdings).then(response => {
-        console.log('Added instrument to portfolio');
-        return getUserPortfolio().then(updatePortfolio.current);
-      });
-    } else {
+    if(instrumentId <= 0 && holdings <= 0) {
       alert('Please choose an instrument and holding amount');
+      return;
     }
+    addToPortfolio(instrumentId, holdings).then(response => {
+      console.log('Added instrument to portfolio');
+      return getUserPortfolio().then(updatePortfolio.current);
+    });
   };
 
   React.useEffect(() => {
