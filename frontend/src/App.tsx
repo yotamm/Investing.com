@@ -2,30 +2,21 @@ import React from 'react';
 import './App.css';
 import {Portfolio} from "./components/Portfolio";
 import {AddInstrument} from "./components/AddInstrument";
-import {IDeletablePortfolioEntry} from "./Interfaces/IDeletablePortfolioEntry";
 import {IInstrument} from "./Interfaces/IInstrument";
 import {addToPortfolio, deleteFromPortfolio, getInstrumentList, getUserPortfolio} from "./services/API";
 import {IPortfolioEntry} from "./Interfaces/IPortfolioEntry";
 
 
 function App() {
-  const [userPortfolio, setUserPortfolio] = React.useState<IDeletablePortfolioEntry[]>([]);
+  const [userPortfolio, setUserPortfolio] = React.useState<IPortfolioEntry[]>([]);
   const [instrumentList, setInstrumentList] = React.useState<IInstrument[]>([]);
-  const updatePortfolio = React.useRef((response: IPortfolioEntry[]) => {
-    let entries: IDeletablePortfolioEntry[] = [];
-    for (let entry of response) {
-      const onDeleteHandler = () => {
-        deleteFromPortfolio(entry.instrumentId).then(response => {
-          if (response.status === 200) {
-            return getUserPortfolio().then(updatePortfolio.current);
-          }
-        });
-      };
-      const withDelete: IDeletablePortfolioEntry = {...entry, onDelete: onDeleteHandler};
-      entries.push(withDelete);
-    }
-    setUserPortfolio(entries);
-  });
+  const onDeleteHandler = (instrumentId: number) => {
+    deleteFromPortfolio(instrumentId).then(response => {
+      if (response.status === 200) {
+        return getUserPortfolio().then((response: IPortfolioEntry[]) => setUserPortfolio(response));
+      }
+    });
+  };
   const addInstrument = (instrumentId: number, holdings: number) => {
     if(instrumentId <= 0 && holdings <= 0) {
       alert('Please choose an instrument and holding amount');
@@ -33,12 +24,12 @@ function App() {
     }
     addToPortfolio(instrumentId, holdings).then(response => {
       console.log('Added instrument to portfolio');
-      return getUserPortfolio().then(updatePortfolio.current);
+      return getUserPortfolio().then((response: IPortfolioEntry[]) => setUserPortfolio(response));
     });
   };
 
   React.useEffect(() => {
-    getUserPortfolio().then(updatePortfolio.current);
+    getUserPortfolio().then((response: IPortfolioEntry[]) => setUserPortfolio(response));
     getInstrumentList().then((response) => setInstrumentList(response));
   }, []);
   return (
@@ -47,7 +38,7 @@ function App() {
       <section className="user-portfolio" id="user-portfolio">
         <h2 className="heading-color">Your Portfolio</h2>
         <div className="portfolio-wrapper">
-          <Portfolio entries={userPortfolio}/>
+          <Portfolio entries={userPortfolio} onDelete={onDeleteHandler}/>
         </div>
       </section>
       <section className="add-to-portfolio" id="add-to-portfolio">

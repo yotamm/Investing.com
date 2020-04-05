@@ -1,16 +1,16 @@
 import React from "react";
 import './Portfolio.css';
-import {IDeletablePortfolioEntry} from "../Interfaces/IDeletablePortfolioEntry";
+import {IPortfolioEntry} from "../Interfaces/IPortfolioEntry";
 
 
-const Portfolio: React.FC<{ entries: IDeletablePortfolioEntry[] }> = ({entries}) => {
+const Portfolio: React.FC<{ entries: IPortfolioEntry[], onDelete: (instrumentId: number) => void }> = (props) => {
   return (
     <ul className="list-group">
-      {entries.map((value, index) => {
+      {props.entries.map((entry, index) => {
         return (
           <li className="list-group-item portfolio-entry-item" key={index}>
-            <span>{value.holdings}$ | {value.name}</span>
-            <button type="button" className="btn btn-danger" onClick={value.onDelete}>Delete</button>
+            <span>{entry.holdings}$ | {entry.name}</span>
+            <button type="button" className="btn btn-danger" onClick={() => props.onDelete(entry.instrumentId)}>Delete</button>
           </li>
         );
       })}
