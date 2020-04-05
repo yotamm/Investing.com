@@ -4,7 +4,7 @@ import {Portfolio} from "./components/Portfolio";
 import {AddInstrument} from "./components/AddInstrument";
 import {IDeletablePortfolioEntry} from "./Interfaces/IDeletablePortfolioEntry";
 import {IInstrument} from "./Interfaces/IInstrument";
-import {deleteFromPortfolio, getInstrumentList, getUserPortfolio} from "./services/API";
+import {addToPortfolio, deleteFromPortfolio, getInstrumentList, getUserPortfolio} from "./services/API";
 import {IPortfolioEntry} from "./Interfaces/IPortfolioEntry";
 
 
@@ -26,6 +26,16 @@ function App() {
 		}
 		setUserPortfolio(entries);
 	});
+	const addInstrument = (instrumentId: number, holdings: number) => {
+		if(instrumentId > 0 && holdings > 0) {
+			addToPortfolio(instrumentId, holdings).then(response => {
+				console.log('Added instrument to portfolio');
+				return getUserPortfolio().then(updatePortfolio.current);
+			});
+		} else {
+			alert('Please choose an instrument and holding amount');
+		}
+	};
 
 	React.useEffect(() => {
 		getUserPortfolio().then(updatePortfolio.current);
@@ -42,7 +52,7 @@ function App() {
 			</section>
 			<section className="add-to-portfolio" id="add-to-portfolio">
 				<h2 className="heading-color">Add To Your Portfolio</h2>
-				<AddInstrument instruments={instrumentList} onAddToPortfolio={() => getUserPortfolio().then(updatePortfolio.current)}/>
+				<AddInstrument instruments={instrumentList} onAddToPortfolio={addInstrument}/>
 			</section>
 		</div>
 	);
