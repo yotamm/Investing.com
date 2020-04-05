@@ -9,9 +9,11 @@ Stack: FE: reactJS, BE: expressJS.
 The "mysql" npm package does not yet support the new MySQL authentication methods so when you set up the MySQL server please run the following and change parameters to your needs.  
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'YourRootPassword'
 
-2. Run npm start inside the project root folder.
+2. Run npm run init:db
 
-3. Run npm start inside the frontend folder.
+2. Run npm start.
+
+3. Run npm run start:client.
 
 4. Your'e all set! the app is waiting in localhost:3000
 
